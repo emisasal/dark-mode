@@ -1,34 +1,40 @@
 import { useEffect, useState } from "react"
 import styles from "./Navbar.module.css"
 
-type Mode = "auto" | "light" | "dark"
+type Mode = "auto" | "light" | "dark" | null
 
 const Navbar = () => {
   const [selectedMode, setSelectedMode] = useState<Mode>()
-
-//   Persist the selected mode in localStorage
+  const html = document.querySelector("html")
 
   useEffect(() => {
     const storedMode = localStorage?.getItem("selectedMode")
-    // console.log("STORED MODE", storedMode)
-    if (storedMode === null) {
-    console.log("ENTRA")
-//       return setSelectedMode(storedMode as Mode)
+
+    if (!storedMode) {
+      setSelectedMode("auto")
     }
-//     setSelectedMode("auto")
-//     localStorage.setItem("selectedMode", "auto")
+    setSelectedMode(storedMode as Mode)
   }, [])
 
-//   useEffect(() => {
-//     localStorage.setItem("selectedMode", selectedMode as Mode)
-//   }, [selectedMode])
+  const handleThemeChange = (mode: Mode) => {
+    html?.style.setProperty(
+      `color-scheme`,
+      mode === "auto" ? "light dark" : mode
+    )
+  }
 
-    console.log("SELECTED MODE", selectedMode)
+  useEffect(() => {
+    if (selectedMode) {
+      localStorage.setItem("selectedMode", selectedMode)
+      handleThemeChange(selectedMode)
+    }
+  }, [selectedMode])
+
   return (
     <nav className={styles.container}>
-      <label htmlFor="theme">Theme:</label>
+      <label htmlFor="theme">Select theme:</label>
       <select
-        value={selectedMode}
+        value={selectedMode || ""}
         onChange={(e) => setSelectedMode(e.target.value as Mode)}
       >
         <option value="auto">Auto</option>

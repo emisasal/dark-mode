@@ -21,12 +21,21 @@ function App() {
             </a>
           </div>
           <h1>Vite + React</h1>
+          <h2>CSS Color Scheme Change</h2>
           <div className="card">
             <button onClick={() => setCount((count) => count + 1)}>
               count is {count}
             </button>
             <p>
-              Edit <code>src/App.tsx</code> and save to test HMR
+              Color mode change using CSS <code>color-scheme</code> property
+            </p>
+            <p>
+              Color and background-color element properties uses{" "}
+              <code>light-dark()</code> to change colors
+            </p>
+            <p>
+              Selected theme is stored in localStorage (default to "auto" /
+              system)
             </p>
           </div>
           <p className="read-the-docs">
